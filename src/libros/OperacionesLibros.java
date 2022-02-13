@@ -25,6 +25,7 @@ import java.sql.Statement;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -123,6 +124,123 @@ public class OperacionesLibros {
             conexion.cerrarConexion();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error al cargar los datos a la tabla..." + e, "¡¡Error de la aplicación!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void filtroSearchLibro(JTable tbl_libros, JLabel mensajeReg, String columna, String dato) {
+        DefaultTableModel tabla = new DefaultTableModel(datos, cabecera) {
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if (columnas == 8) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        tbl_libros.setModel(tabla);
+        
+        try {
+            String sentencia = "SELECT * FROM tbl_libro WHERE "+columna+" = '"+dato+"'";
+            Connection con = conexion.obConexion();
+            Statement ver = conexion.crearSentencia();
+            re = ver.executeQuery(sentencia);
+            rM = (ResultSetMetaData) re.getMetaData();
+            nColumnas = rM.getColumnCount();
+            int cantFilas = 0;
+            datosTabla = new Object[nColumnas];
+            
+            while (re.next()) {
+                for (int i = 0; i < nColumnas; i++) {
+                    datosTabla[i] = re.getObject(i + 1);
+                }
+                tabla.addRow(datosTabla);
+            }
+            for (int j = 0; j < tabla.getRowCount(); j++) {
+                cantFilas = j + 1;
+            }
+            
+            mensajeReg.setText("Registros encontrados: " + cantFilas);
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al cargar los datos a la tabla..." + e, "¡¡Error de la aplicación!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void filtroSearchLibroEjemplar(JTable tbl_libros, JLabel mensajeReg, String columna, int dato) {
+        DefaultTableModel tabla = new DefaultTableModel(datos, cabecera) {
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if (columnas == 8) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        tbl_libros.setModel(tabla);
+        
+        try {
+            String sentencia = "SELECT * FROM tbl_libro WHERE "+columna+" = "+dato+"";
+            Connection con = conexion.obConexion();
+            Statement ver = conexion.crearSentencia();
+            re = ver.executeQuery(sentencia);
+            rM = (ResultSetMetaData) re.getMetaData();
+            nColumnas = rM.getColumnCount();
+            int cantFilas = 0;
+            datosTabla = new Object[nColumnas];
+            
+            while (re.next()) {
+                for (int i = 0; i < nColumnas; i++) {
+                    datosTabla[i] = re.getObject(i + 1);
+                }
+                tabla.addRow(datosTabla);
+            }
+            for (int j = 0; j < tabla.getRowCount(); j++) {
+                cantFilas = j + 1;
+            }
+            
+            mensajeReg.setText("Registros encontrados: " + cantFilas);
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al cargar los datos a la tabla..." + e, "¡¡Error de la aplicación!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void restarEjemplar(String IDlibro) {
+        try {
+            String sentencia = "UPDATE tbl_libro set ejemplares = ejemplares - 1"
+                   + " where ID_libro='" + IDlibro + "'";
+            Connection con = conexion.obConexion();
+            Statement actualizar = conexion.crearSentencia();
+            actualizar.executeUpdate(sentencia);
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "No se logró restar el ejemplar de la base de datos. Error de la aplicación..." + e, "¡¡Error de la aplicación!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void cargarDatosLibForm(String idLib, JTextField IDlibro, JTextField nombre, JTextField autor, JTextField editorial,
+           JTextField anioPulib, JTextField ciudad, JTextField area, JTextField ejemplares) {
+        try {
+            String sentencia = "SELECT ID_libro, nombre_libro, autor_libro, editorial_libro, anio_publicacion, ciudad_publicacion,"
+                   + "area_conocimiento, ejemplares FROM tbl_libro WHERE ID_libro = '"+idLib+"'";
+            Connection con = conexion.obConexion();
+            Statement ver = conexion.crearSentencia();
+            re = ver.executeQuery(sentencia);
+            if(re.next()) {
+                IDlibro.setText(re.getString("ID_libro"));
+                nombre.setText(re.getString("nombre_libro"));
+                autor.setText(re.getString("autor_libro"));
+                editorial.setText(re.getString("editorial_libro"));
+                anioPulib.setText(re.getString("anio_publicacion"));
+                ciudad.setText(re.getString("ciudad_publicacion"));
+                area.setText(re.getString("area_conocimiento"));
+                ejemplares.setText(re.getString("ejemplares"));
+            }
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al cargar los datos al formulario..."+e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
 

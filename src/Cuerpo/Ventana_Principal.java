@@ -1,20 +1,47 @@
+/*
+ * Copyright (C) 2022 Evelyn López Nieto
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package Cuerpo;
 
 import conexion.ConexionBiblioteca;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import lectores.OperacionesLectores;
 import libros.OperacionesLibros;
 import prestamos.OperacionesPrestamos;
 import rojerusan.RSPanelsSlider;
 
+/**
+ *
+ * @author Evelyn López Nieto
+ */
 public class Ventana_Principal extends javax.swing.JFrame {
 
     ConexionBiblioteca conexion = new ConexionBiblioteca();
+    Portapapeles portapapeles = new Portapapeles();
     OperacionesLibros libros = new OperacionesLibros();
     OperacionesPrestamos prestamos = new OperacionesPrestamos();
     OperacionesLectores lectores = new OperacionesLectores();
@@ -23,12 +50,32 @@ public class Ventana_Principal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/image/icono_desktop.png")).getImage());
+        this.pnlBienvenida.setVisible(true);
+        notifyVencidos();
+        cerrarPrincipal();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pmPrestamos = new javax.swing.JPopupMenu();
+        pmmiEditarPrestamo = new javax.swing.JMenuItem();
+        pmmiEliminarPrestamo = new javax.swing.JMenuItem();
+        pmmiEntregado = new javax.swing.JMenuItem();
+        pmmiCopiarIDPres = new javax.swing.JMenuItem();
+        pmLibros = new javax.swing.JPopupMenu();
+        pmmiEditarLibro = new javax.swing.JMenuItem();
+        pmmiEliminarLibro = new javax.swing.JMenuItem();
+        pmmiCopiarIDLib = new javax.swing.JMenuItem();
+        pmLectores = new javax.swing.JPopupMenu();
+        pmmiEditarLector = new javax.swing.JMenuItem();
+        pmmiEliminarLector = new javax.swing.JMenuItem();
+        pmmiCopiarIDLec = new javax.swing.JMenuItem();
+        pmPegarIDlib = new javax.swing.JPopupMenu();
+        pmmiPegarID = new javax.swing.JMenuItem();
+        pmPegarIDLec = new javax.swing.JPopupMenu();
+        pmmiPegarIDLec = new javax.swing.JMenuItem();
         pnlBotonesMenu = new javax.swing.JPanel();
         btnRegLibros = new rojeru_san.complementos.RSButtonHover();
         btnLibros = new rojeru_san.complementos.RSButtonHover();
@@ -51,12 +98,11 @@ public class Ventana_Principal extends javax.swing.JFrame {
         cbFiltroSearchPrestamos = new javax.swing.JComboBox<>();
         jLabel29 = new javax.swing.JLabel();
         btnReportePrestamo = new javax.swing.JButton();
+        btnRecargarTablaPres = new javax.swing.JButton();
         pnlRegPrestamos = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         rSLabelImage3 = new necesario.RSLabelImage();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblInfLibroPrestamo = new javax.swing.JTable();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -77,9 +123,10 @@ public class Ventana_Principal extends javax.swing.JFrame {
         cbEstadoPrestamo = new javax.swing.JComboBox<>();
         calenPrestamo = new rojeru_san.componentes.RSCalendar();
         btnRegistrarPrestamo = new javax.swing.JButton();
-        btnUpdatePrestamo = new javax.swing.JButton();
         btnCancelarPrestamo = new javax.swing.JButton();
         btnLimpiarFormPrestamo = new javax.swing.JButton();
+        btnFecha1Pres = new javax.swing.JButton();
+        btnFecha2Pres = new javax.swing.JButton();
         pnlLibros = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
         lblLibrosEncontrados = new javax.swing.JLabel();
@@ -90,6 +137,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
         cbFiltroSearchLibros = new javax.swing.JComboBox<>();
         jLabel32 = new javax.swing.JLabel();
         btnReporteLibros = new javax.swing.JButton();
+        btnRecargarTablaLib = new javax.swing.JButton();
         pnlRegLibros = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -112,7 +160,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
         txtIDregLibro = new javax.swing.JTextField();
         btnLimpiarFormLibro = new javax.swing.JButton();
         btnRegistrarLibro = new javax.swing.JButton();
-        btnUpdateLibro = new javax.swing.JButton();
         btnCancelarRegLibro = new javax.swing.JButton();
         pnlLector = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
@@ -124,6 +171,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
         cbFiltroSearchLectores = new javax.swing.JComboBox<>();
         jLabel35 = new javax.swing.JLabel();
         btnReporteLectores = new javax.swing.JButton();
+        btnRecargarTablaLec = new javax.swing.JButton();
         pnlRegLector = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -143,13 +191,112 @@ public class Ventana_Principal extends javax.swing.JFrame {
         txtTelefonoLector = new javax.swing.JTextField();
         txtDomicilioLector = new javax.swing.JTextField();
         btnRegistrarLector = new javax.swing.JButton();
-        btnUpdateLector = new javax.swing.JButton();
         btnCancelarRegLector = new javax.swing.JButton();
         btnLimpiarFormLectores = new javax.swing.JButton();
+        txtGradoLector = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        txtGrupoLector = new javax.swing.JTextField();
+        jLabel31 = new javax.swing.JLabel();
         pnlEstadisticas = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+
+        pmmiEditarPrestamo.setText("Editar");
+        pmmiEditarPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiEditarPrestamoActionPerformed(evt);
+            }
+        });
+        pmPrestamos.add(pmmiEditarPrestamo);
+
+        pmmiEliminarPrestamo.setText("Eliminar");
+        pmmiEliminarPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiEliminarPrestamoActionPerformed(evt);
+            }
+        });
+        pmPrestamos.add(pmmiEliminarPrestamo);
+
+        pmmiEntregado.setText("Libro entregado");
+        pmmiEntregado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiEntregadoActionPerformed(evt);
+            }
+        });
+        pmPrestamos.add(pmmiEntregado);
+
+        pmmiCopiarIDPres.setText("Copiar ID");
+        pmmiCopiarIDPres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiCopiarIDPresActionPerformed(evt);
+            }
+        });
+        pmPrestamos.add(pmmiCopiarIDPres);
+
+        pmmiEditarLibro.setText("Editar");
+        pmmiEditarLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiEditarLibroActionPerformed(evt);
+            }
+        });
+        pmLibros.add(pmmiEditarLibro);
+
+        pmmiEliminarLibro.setText("Eliminar");
+        pmmiEliminarLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiEliminarLibroActionPerformed(evt);
+            }
+        });
+        pmLibros.add(pmmiEliminarLibro);
+
+        pmmiCopiarIDLib.setText("Copiar ID");
+        pmmiCopiarIDLib.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiCopiarIDLibActionPerformed(evt);
+            }
+        });
+        pmLibros.add(pmmiCopiarIDLib);
+
+        pmmiEditarLector.setText("Editar");
+        pmmiEditarLector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiEditarLectorActionPerformed(evt);
+            }
+        });
+        pmLectores.add(pmmiEditarLector);
+
+        pmmiEliminarLector.setText("Eliminar");
+        pmmiEliminarLector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiEliminarLectorActionPerformed(evt);
+            }
+        });
+        pmLectores.add(pmmiEliminarLector);
+
+        pmmiCopiarIDLec.setText("Copiar ID");
+        pmmiCopiarIDLec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiCopiarIDLecActionPerformed(evt);
+            }
+        });
+        pmLectores.add(pmmiCopiarIDLec);
+
+        pmmiPegarID.setText("Pegar ID");
+        pmmiPegarID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiPegarIDActionPerformed(evt);
+            }
+        });
+        pmPegarIDlib.add(pmmiPegarID);
+
+        pmmiPegarIDLec.setText("Pegar ID");
+        pmmiPegarIDLec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pmmiPegarIDLecActionPerformed(evt);
+            }
+        });
+        pmPegarIDLec.add(pmmiPegarIDLec);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -323,7 +470,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
             .addGroup(pnlBienvenidaLayout.createSequentialGroup()
                 .addGap(92, 92, 92)
                 .addComponent(rSPanelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         rSPanelsSlider1.add(pnlBienvenida, "card9");
@@ -348,12 +495,18 @@ public class Ventana_Principal extends javax.swing.JFrame {
                 "ID préstamo", "ID libro", "ID lector", "Fecha préstamo", "Fecha entrega", "Turno", "Tipo de préstamo", "Status"
             }
         ));
+        tblPrestamos.setComponentPopupMenu(pmPrestamos);
         jScrollPane2.setViewportView(tblPrestamos);
 
         txtFiltroPrestamos.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
 
         btnSearchPrestamo.setBackground(new java.awt.Color(153, 0, 0));
         btnSearchPrestamo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1027.jpg"))); // NOI18N
+        btnSearchPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchPrestamoActionPerformed(evt);
+            }
+        });
 
         cbFiltroSearchPrestamos.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
         cbFiltroSearchPrestamos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Fecha de préstamo", "Fecha de entrega", "Turno", "Tipo de préstamo", "Estado" }));
@@ -366,6 +519,15 @@ public class Ventana_Principal extends javax.swing.JFrame {
         btnReportePrestamo.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
         btnReportePrestamo.setForeground(new java.awt.Color(255, 255, 255));
         btnReportePrestamo.setText("Generar reporte");
+
+        btnRecargarTablaPres.setBackground(new java.awt.Color(0, 51, 255));
+        btnRecargarTablaPres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1024.jpg"))); // NOI18N
+        btnRecargarTablaPres.setToolTipText("Recargar tabla");
+        btnRecargarTablaPres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargarTablaPresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPrestamosLayout = new javax.swing.GroupLayout(pnlPrestamos);
         pnlPrestamos.setLayout(pnlPrestamosLayout);
@@ -393,7 +555,9 @@ public class Ventana_Principal extends javax.swing.JFrame {
                                         .addComponent(txtFiltroPrestamos, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnSearchPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(214, 214, 214)
+                                        .addGap(51, 51, 51)
+                                        .addComponent(btnRecargarTablaPres, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(113, 113, 113)
                                         .addComponent(btnReportePrestamo)))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
@@ -407,16 +571,17 @@ public class Ventana_Principal extends javax.swing.JFrame {
             .addGroup(pnlPrestamosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel27)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
                 .addComponent(jLabel29)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbFiltroSearchPrestamos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnReportePrestamo, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(txtFiltroPrestamos)
-                    .addComponent(btnSearchPrestamo, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnSearchPrestamo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRecargarTablaPres, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnReportePrestamo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(txtFiltroPrestamos, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(21, 21, 21)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblPrestamosEncontrados)
@@ -453,19 +618,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
 
         rSLabelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/img_prestamo.png"))); // NOI18N
 
-        jScrollPane1.setFont(new java.awt.Font("MV Boli", 0, 11)); // NOI18N
-
-        tblInfLibroPrestamo.setFont(new java.awt.Font("MV Boli", 0, 11)); // NOI18N
-        tblInfLibroPrestamo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
-            }
-        ));
-        jScrollPane1.setViewportView(tblInfLibroPrestamo);
-
         jLabel19.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
         jLabel19.setText("ID del préstamo:");
 
@@ -486,8 +638,10 @@ public class Ventana_Principal extends javax.swing.JFrame {
         txtFechaPres.setFont(new java.awt.Font("MV Boli", 1, 14)); // NOI18N
 
         txtIDlectorPres.setFont(new java.awt.Font("MV Boli", 1, 14)); // NOI18N
+        txtIDlectorPres.setComponentPopupMenu(pmPegarIDLec);
 
         txtIDlibroPres.setFont(new java.awt.Font("MV Boli", 1, 14)); // NOI18N
+        txtIDlibroPres.setComponentPopupMenu(pmPegarIDlib);
 
         txtIDprestamo.setFont(new java.awt.Font("MV Boli", 1, 14)); // NOI18N
 
@@ -558,13 +712,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
             }
         });
 
-        btnUpdatePrestamo.setBackground(new java.awt.Color(153, 0, 0));
-        btnUpdatePrestamo.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
-        btnUpdatePrestamo.setForeground(new java.awt.Color(255, 255, 255));
-        btnUpdatePrestamo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1024.jpg"))); // NOI18N
-        btnUpdatePrestamo.setText("Actualizar");
-        btnUpdatePrestamo.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
         btnCancelarPrestamo.setBackground(new java.awt.Color(153, 0, 0));
         btnCancelarPrestamo.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
         btnCancelarPrestamo.setForeground(new java.awt.Color(255, 255, 255));
@@ -581,10 +728,29 @@ public class Ventana_Principal extends javax.swing.JFrame {
             }
         });
 
+        btnFecha1Pres.setBackground(new java.awt.Color(0, 0, 153));
+        btnFecha1Pres.setForeground(new java.awt.Color(255, 255, 255));
+        btnFecha1Pres.setText("<-");
+        btnFecha1Pres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecha1PresActionPerformed(evt);
+            }
+        });
+
+        btnFecha2Pres.setBackground(new java.awt.Color(0, 0, 153));
+        btnFecha2Pres.setForeground(new java.awt.Color(255, 255, 255));
+        btnFecha2Pres.setText("<-");
+        btnFecha2Pres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecha2PresActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlRegPrestamosLayout = new javax.swing.GroupLayout(pnlRegPrestamos);
         pnlRegPrestamos.setLayout(pnlRegPrestamosLayout);
         pnlRegPrestamosLayout.setHorizontalGroup(
             pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
                 .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
@@ -601,54 +767,45 @@ public class Ventana_Principal extends javax.swing.JFrame {
                 .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbEstadoPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel26))
-                    .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(jLabel25))
                     .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
-                        .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtFechaEntrega)
-                                .addComponent(txtFechaPres)
-                                .addComponent(txtIDlectorPres)
-                                .addComponent(txtIDlibroPres)
-                                .addComponent(txtIDprestamo, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
-                            .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
-                                    .addComponent(rbtnInterno)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(rbtnExterno))
-                                .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
-                                    .addComponent(rbtnMatutino)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(rbtnVespertino)))
+                        .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtFechaEntrega)
+                            .addComponent(txtFechaPres)
+                            .addComponent(txtIDlectorPres)
+                            .addComponent(txtIDlibroPres)
+                            .addComponent(txtIDprestamo)
                             .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(jLabel24)))
+                                .addComponent(rbtnInterno)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                                .addComponent(rbtnExterno))
+                            .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
+                                .addComponent(rbtnMatutino)
+                                .addGap(18, 18, 18)
+                                .addComponent(rbtnVespertino)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLimpiarFormPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnFecha1Pres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnFecha2Pres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLimpiarFormPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(jLabel26)
+                    .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jLabel24)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(calenPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnCancelarPrestamo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnUpdatePrestamo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                        .addComponent(btnRegistrarPrestamo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(30, 100, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                        .addComponent(btnRegistrarPrestamo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
+                .addGap(30, 95, Short.MAX_VALUE))
         );
         pnlRegPrestamosLayout.setVerticalGroup(
             pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(91, 91, 91)
                 .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
                         .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -677,11 +834,15 @@ public class Ventana_Principal extends javax.swing.JFrame {
                                 .addComponent(jLabel22))
                             .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFechaPres)))
+                                .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtFechaPres)
+                                    .addComponent(btnFecha1Pres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel23)
-                            .addComponent(txtFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnFecha2Pres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel23)
+                                .addComponent(txtFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(pnlRegPrestamosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlRegPrestamosLayout.createSequentialGroup()
                                 .addGap(26, 26, 26)
@@ -700,7 +861,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
                                 .addComponent(jLabel26)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbEstadoPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(35, Short.MAX_VALUE))
+                                .addContainerGap(76, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegPrestamosLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rSLabelImage3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -708,8 +869,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
                         .addComponent(calenPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21)
                         .addComponent(btnRegistrarPrestamo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdatePrestamo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelarPrestamo)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -737,12 +896,18 @@ public class Ventana_Principal extends javax.swing.JFrame {
                 "ID libro", "Nombre", "Autor", "Editorial", "Año publicación", "Ciudad publicación", "Área conocimiento", "Ejemplares"
             }
         ));
+        tblLibros.setComponentPopupMenu(pmLibros);
         jScrollPane3.setViewportView(tblLibros);
 
         txtFiltroLibros.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
 
         btnSearchLibro.setBackground(new java.awt.Color(153, 0, 0));
         btnSearchLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1027.jpg"))); // NOI18N
+        btnSearchLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchLibroActionPerformed(evt);
+            }
+        });
 
         cbFiltroSearchLibros.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
         cbFiltroSearchLibros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "ID", "Nombre del libro", "Autor", "Editorial", "Área de conocimiento", "Cantidad de ejemplares" }));
@@ -755,6 +920,15 @@ public class Ventana_Principal extends javax.swing.JFrame {
         btnReporteLibros.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
         btnReporteLibros.setForeground(new java.awt.Color(255, 255, 255));
         btnReporteLibros.setText("Generar reporte");
+
+        btnRecargarTablaLib.setBackground(new java.awt.Color(0, 51, 204));
+        btnRecargarTablaLib.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1024.jpg"))); // NOI18N
+        btnRecargarTablaLib.setToolTipText("Recargar tabla");
+        btnRecargarTablaLib.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargarTablaLibActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlLibrosLayout = new javax.swing.GroupLayout(pnlLibros);
         pnlLibros.setLayout(pnlLibrosLayout);
@@ -776,10 +950,12 @@ public class Ventana_Principal extends javax.swing.JFrame {
                                 .addComponent(txtFiltroLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSearchLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(235, 235, 235)
+                                .addGap(107, 107, 107)
+                                .addComponent(btnRecargarTablaLib, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(78, 78, 78)
                                 .addComponent(btnReporteLibros))
                             .addComponent(lblLibrosEncontrados, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 255, Short.MAX_VALUE)))
+                        .addGap(0, 265, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlLibrosLayout.setVerticalGroup(
@@ -787,16 +963,17 @@ public class Ventana_Principal extends javax.swing.JFrame {
             .addGroup(pnlLibrosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel30)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(jLabel32)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbFiltroSearchLibros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlLibrosLayout.createSequentialGroup()
-                        .addGroup(pnlLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFiltroLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnReporteLibros, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(pnlLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtFiltroLibros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                            .addComponent(btnRecargarTablaLib, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnReporteLibros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnSearchLibro))
@@ -897,13 +1074,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
             }
         });
 
-        btnUpdateLibro.setBackground(new java.awt.Color(153, 0, 0));
-        btnUpdateLibro.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
-        btnUpdateLibro.setForeground(new java.awt.Color(255, 255, 255));
-        btnUpdateLibro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1024.jpg"))); // NOI18N
-        btnUpdateLibro.setText("Actualizar");
-        btnUpdateLibro.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
         btnCancelarRegLibro.setBackground(new java.awt.Color(153, 0, 0));
         btnCancelarRegLibro.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
         btnCancelarRegLibro.setForeground(new java.awt.Color(255, 255, 255));
@@ -938,9 +1108,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
                                     .addComponent(txtNameLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                                     .addComponent(txtNameAutor))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(pnlRegLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnCancelarRegLibro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnUpdateLibro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnCancelarRegLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlRegLibrosLayout.createSequentialGroup()
                                 .addComponent(txtIDregLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(26, 26, 26)
@@ -978,16 +1146,14 @@ public class Ventana_Principal extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addGroup(pnlRegLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNameLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnUpdateLibro))))
+                            .addComponent(btnCancelarRegLibro))))
                 .addGroup(pnlRegLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRegLibrosLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel13))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegLibrosLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addGroup(pnlRegLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNameAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCancelarRegLibro))))
+                        .addComponent(txtNameAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlRegLibrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtEditorial, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1012,7 +1178,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
                             .addComponent(jLabel18))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegLibrosLayout.createSequentialGroup()
-                        .addGap(0, 18, Short.MAX_VALUE)
+                        .addGap(0, 62, Short.MAX_VALUE)
                         .addComponent(rSLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -1032,21 +1198,27 @@ public class Ventana_Principal extends javax.swing.JFrame {
 
         tblLectores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID lector", "Nombre", "Apellido paterno", "Apellido materno", "Edad", "Teléfono", "Domicilio"
+                "ID lector", "Nombre", "Apellido paterno", "Apellido materno", "Edad", "Teléfono", "Domicilio", "Grado", "Grupo"
             }
         ));
+        tblLectores.setComponentPopupMenu(pmLectores);
         jScrollPane4.setViewportView(tblLectores);
 
         txtFiltroLectores.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
 
         btnSearchLector.setBackground(new java.awt.Color(153, 0, 0));
         btnSearchLector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1027.jpg"))); // NOI18N
+        btnSearchLector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchLectorActionPerformed(evt);
+            }
+        });
 
         cbFiltroSearchLectores.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
-        cbFiltroSearchLectores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "ID", "Nombre", "Apellido paterno", "Apellido materno", "Edad" }));
+        cbFiltroSearchLectores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "ID", "Nombre", "Apellido paterno", "Apellido materno", "Edad", "Teléfono", "Grado", "Grupo" }));
 
         jLabel35.setFont(new java.awt.Font("MV Boli", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(255, 255, 255));
@@ -1056,6 +1228,15 @@ public class Ventana_Principal extends javax.swing.JFrame {
         btnReporteLectores.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
         btnReporteLectores.setForeground(new java.awt.Color(255, 255, 255));
         btnReporteLectores.setText("Generar reporte");
+
+        btnRecargarTablaLec.setBackground(new java.awt.Color(0, 51, 204));
+        btnRecargarTablaLec.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1024.jpg"))); // NOI18N
+        btnRecargarTablaLec.setToolTipText("Recargar tabla");
+        btnRecargarTablaLec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargarTablaLecActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlLectorLayout = new javax.swing.GroupLayout(pnlLector);
         pnlLector.setLayout(pnlLectorLayout);
@@ -1073,14 +1254,16 @@ public class Ventana_Principal extends javax.swing.JFrame {
                         .addGroup(pnlLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbFiltroSearchLectores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel35)
+                            .addComponent(lblLectoresEncontrados, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlLectorLayout.createSequentialGroup()
                                 .addComponent(txtFiltroLectores, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSearchLector, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(248, 248, 248)
-                                .addComponent(btnReporteLectores))
-                            .addComponent(lblLectoresEncontrados, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 312, Short.MAX_VALUE)))
+                                .addGap(160, 160, 160)
+                                .addComponent(btnRecargarTablaLec, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(131, 131, 131)
+                                .addComponent(btnReporteLectores)))
+                        .addGap(0, 229, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlLectorLayout.setVerticalGroup(
@@ -1088,16 +1271,16 @@ public class Ventana_Principal extends javax.swing.JFrame {
             .addGroup(pnlLectorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel33)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(jLabel35)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbFiltroSearchLectores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnSearchLector, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                        .addComponent(txtFiltroLectores))
-                    .addComponent(btnReporteLectores))
+                .addGroup(pnlLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSearchLector, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(txtFiltroLectores)
+                    .addComponent(btnRecargarTablaLec, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnReporteLectores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1183,13 +1366,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
             }
         });
 
-        btnUpdateLector.setBackground(new java.awt.Color(153, 0, 0));
-        btnUpdateLector.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
-        btnUpdateLector.setForeground(new java.awt.Color(255, 255, 255));
-        btnUpdateLector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1024.jpg"))); // NOI18N
-        btnUpdateLector.setText("Actualizar");
-        btnUpdateLector.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-
         btnCancelarRegLector.setBackground(new java.awt.Color(153, 0, 0));
         btnCancelarRegLector.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
         btnCancelarRegLector.setForeground(new java.awt.Color(255, 255, 255));
@@ -1206,6 +1382,16 @@ public class Ventana_Principal extends javax.swing.JFrame {
             }
         });
 
+        txtGradoLector.setFont(new java.awt.Font("MV Boli", 1, 14)); // NOI18N
+
+        jLabel28.setFont(new java.awt.Font("MV Boli", 1, 18)); // NOI18N
+        jLabel28.setText("Grado:");
+
+        txtGrupoLector.setFont(new java.awt.Font("MV Boli", 1, 14)); // NOI18N
+
+        jLabel31.setFont(new java.awt.Font("MV Boli", 1, 18)); // NOI18N
+        jLabel31.setText("Grupo:");
+
         javax.swing.GroupLayout pnlRegLectorLayout = new javax.swing.GroupLayout(pnlRegLector);
         pnlRegLector.setLayout(pnlRegLectorLayout);
         pnlRegLectorLayout.setHorizontalGroup(
@@ -1215,10 +1401,21 @@ public class Ventana_Principal extends javax.swing.JFrame {
                 .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegLectorLayout.createSequentialGroup()
                         .addComponent(rSLabelImage4, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(125, 125, 125)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTelefonoLector, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(pnlRegLectorLayout.createSequentialGroup()
+                                .addGap(125, 125, 125)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtTelefonoLector, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlRegLectorLayout.createSequentialGroup()
+                                .addGap(150, 150, 150)
+                                .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel31))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtGrupoLector)
+                                    .addComponent(txtGradoLector)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegLectorLayout.createSequentialGroup()
                         .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
@@ -1240,7 +1437,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
                 .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnCancelarRegLector, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnUpdateLector, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRegistrarLector, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnLimpiarFormLectores, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(85, Short.MAX_VALUE))
@@ -1253,7 +1449,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
                     .addGroup(pnlRegLectorLayout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 2, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegLectorLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1276,8 +1472,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
                     .addGroup(pnlRegLectorLayout.createSequentialGroup()
                         .addComponent(btnRegistrarLector)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdateLector)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelarRegLector)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1286,7 +1480,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlRegLectorLayout.createSequentialGroup()
-                        .addGap(32, 32, Short.MAX_VALUE)
+                        .addGap(66, 75, Short.MAX_VALUE)
                         .addComponent(rSLabelImage4, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlRegLectorLayout.createSequentialGroup()
                         .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1296,6 +1490,14 @@ public class Ventana_Principal extends javax.swing.JFrame {
                         .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtDomicilioLector, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtGradoLector, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel28))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlRegLectorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtGrupoLector, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel31))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -1312,7 +1514,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
         );
         pnlEstadisticasLayout.setVerticalGroup(
             pnlEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 656, Short.MAX_VALUE)
+            .addGap(0, 700, Short.MAX_VALUE)
         );
 
         rSPanelsSlider1.add(pnlEstadisticas, "card2");
@@ -1344,6 +1546,35 @@ public class Ventana_Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void notifyVencidos() {
+        prestamos.notifyAvencer();
+    }
+    
+    public void updateEstadosPrestamo() {
+        prestamos.actualizarEstadoActualPrestamos();
+    }
+    
+    public void cerrarPrincipal() {
+        try {
+            this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent we) {
+                    confirmSalida();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void confirmSalida() {
+        int valor = JOptionPane.showConfirmDialog(null, " ¿Está seguro de cerrar el programa?", "Advertencia", JOptionPane.YES_NO_OPTION);
+        if (valor == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }
 
     private void btnPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrestamosActionPerformed
         this.rSPanelsSlider1.setPanelSlider(20, pnlPrestamos, RSPanelsSlider.DIRECT.UP);
@@ -1483,9 +1714,10 @@ public class Ventana_Principal extends javax.swing.JFrame {
                    + "Por favor complete los datos.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         } else {
             prestamos.registrarPrestamo(IDlibro, IDlector, fechaPrestamo, fechaEntrega, turno, tipoPrestamo, estado);
+            prestamos.regHistorialPrestamo(IDlibro, IDlector, fechaPrestamo, fechaEntrega, turno, tipoPrestamo);
+            libros.restarEjemplar(IDlibro);
             JOptionPane.showMessageDialog(this, "Préstamo registrado", "Notificación", JOptionPane.INFORMATION_MESSAGE);
             try {
-                //investigar cómo obtener el último ID registrado
                 String sentencia = "SELECT ID_prestamo FROM tbl_prestamo WHERE ID_prestamo = (SELECT MAX(ID_prestamo) FROM tbl_prestamo)";
                 String IDPres = null;
                 Connection con = conexion.obConexion();
@@ -1494,7 +1726,7 @@ public class Ventana_Principal extends javax.swing.JFrame {
                 if (re.next()) {
                     IDPres = re.getString("ID_prestamo");
                 }
-                JOptionPane.showMessageDialog(this, "ID del préstamo: " + IDPres +"\n\nEntregue al lector para\n"
+                JOptionPane.showMessageDialog(this, "ID del préstamo: " + IDPres + "\n\nEntregue al lector para\n"
                        + "identificar el día de la entrega.", "Notificación", JOptionPane.INFORMATION_MESSAGE);
                 conexion.cerrarConexion();
             } catch (SQLException e) {
@@ -1537,14 +1769,16 @@ public class Ventana_Principal extends javax.swing.JFrame {
         String edad = this.txtEdadLector.getText();
         String telefono = this.txtTelefonoLector.getText();
         String domicilio = this.txtDomicilioLector.getText();
+        String grado = this.txtGradoLector.getText();
+        String grupo = this.txtGrupoLector.getText();
 
         if (this.txtIDregLector.getText().isEmpty() || this.txtNameLector.getText().isEmpty() || this.txtApePaterno.getText().isEmpty()
                || this.txtApeMaterno.getText().isEmpty() || this.txtEdadLector.getText().isEmpty() || this.txtTelefonoLector.getText().isEmpty()
-               || this.txtDomicilioLector.getText().isEmpty()) {
+               || this.txtDomicilioLector.getText().isEmpty() || this.txtGradoLector.getText().isEmpty() || this.txtGrupoLector.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Faltan datos por ingresar al formulario.\n"
                    + "Por favor complete los datos.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            lectores.registrarLector(IDlector, nombreLector, paterno, materno, edad, telefono, domicilio);
+            lectores.registrarLector(IDlector, nombreLector, paterno, materno, edad, telefono, domicilio, grado, grupo);
             JOptionPane.showMessageDialog(this, "Lector registrado", "Notificación", JOptionPane.INFORMATION_MESSAGE);
         }
 
@@ -1604,6 +1838,270 @@ public class Ventana_Principal extends javax.swing.JFrame {
         this.txtDomicilioLector.setText("");
     }//GEN-LAST:event_btnLimpiarFormLectoresActionPerformed
 
+    private void btnSearchPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPrestamoActionPerformed
+        int opcion = this.cbFiltroSearchPrestamos.getSelectedIndex();
+        String filtro = null;
+        String dato = this.txtFiltroPrestamos.getText();
+
+        switch (opcion) {
+            case 0:
+                prestamos.mostrarPrestamos(tblPrestamos, lblPrestamosEncontrados);
+                break;
+            case 1:
+                filtro = "fecha_prestamo";
+                prestamos.filtroSearchPrestamo(tblPrestamos, dato, lblPrestamosEncontrados, filtro);
+                break;
+            case 2:
+                filtro = "fecha_entrega";
+                prestamos.filtroSearchPrestamo(tblPrestamos, dato, lblPrestamosEncontrados, filtro);
+                break;
+            case 3:
+                filtro = "turno";
+                prestamos.filtroSearchPrestamo(tblPrestamos, dato, lblPrestamosEncontrados, filtro);
+                break;
+            case 4:
+                filtro = "tipo_prestamo";
+                prestamos.filtroSearchPrestamo(tblPrestamos, dato, lblPrestamosEncontrados, filtro);
+                break;
+            case 5:
+                filtro = "status_prestamo";
+                prestamos.filtroSearchPrestamo(tblPrestamos, dato, lblPrestamosEncontrados, filtro);
+                break;
+
+        }
+    }//GEN-LAST:event_btnSearchPrestamoActionPerformed
+
+    private void btnSearchLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchLibroActionPerformed
+        int opcion = this.cbFiltroSearchLibros.getSelectedIndex();
+        String filtro = null;
+        String dato = this.txtFiltroLibros.getText();
+
+        switch (opcion) {
+            case 0:
+                libros.mostrarLibros(tblLibros, lblLibrosEncontrados);
+                break;
+            case 1:
+                filtro = "ID_libro";
+                libros.filtroSearchLibro(tblLibros, lblLibrosEncontrados, filtro, dato);
+                break;
+            case 2:
+                filtro = "nombre_libro";
+                libros.filtroSearchLibro(tblLibros, lblLibrosEncontrados, filtro, dato);
+                break;
+            case 3:
+                filtro = "autor_libro";
+                libros.filtroSearchLibro(tblLibros, lblLibrosEncontrados, filtro, dato);
+                break;
+            case 4:
+                filtro = "editorial_libro";
+                libros.filtroSearchLibro(tblLibros, lblLibrosEncontrados, filtro, dato);
+                break;
+            case 5:
+                filtro = "area_conocimiento";
+                libros.filtroSearchLibro(tblLibros, lblLibrosEncontrados, filtro, dato);
+                break;
+            case 6:
+                filtro = "ejemplares";
+                if (libros.validarNumeros(dato)) {
+                    int cantLibro = Integer.parseInt(dato);
+                    libros.filtroSearchLibroEjemplar(tblLibros, lblLibrosEncontrados, filtro, cantLibro);
+                } else {
+                    JOptionPane.showMessageDialog(this, "La opción de búsqueda se basa en dato numérico, no en caracter.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
+                break;
+        }
+    }//GEN-LAST:event_btnSearchLibroActionPerformed
+
+    private void btnSearchLectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchLectorActionPerformed
+        int opcion = this.cbFiltroSearchLectores.getSelectedIndex();
+        String filtro = null;
+        String dato = this.txtFiltroLectores.getText();
+        
+        switch(opcion) {
+            case 0:
+                lectores.mostrarLectores(tblLectores, lblLectoresEncontrados);
+                break;
+            case 1:
+                filtro = "ID_lector";
+                lectores.filtroSearchLectores(tblLectores, lblLectoresEncontrados, filtro, dato);
+                break;
+            case 2:
+                filtro = "nombre_lector";
+                lectores.filtroSearchLectores(tblLectores, lblLectoresEncontrados, filtro, dato);
+                break;
+            case 3:
+                filtro = "ape_paterno_lector";
+                lectores.filtroSearchLectores(tblLectores, lblLectoresEncontrados, filtro, dato);
+                break;
+            case 4:
+                filtro = "ape_materno_lector";
+                lectores.filtroSearchLectores(tblLectores, lblLectoresEncontrados, filtro, dato);
+                break;
+            case 5:
+                filtro = "edad_lector";
+                lectores.filtroSearchLectores(tblLectores, lblLectoresEncontrados, filtro, dato);
+                break;
+            case 6:
+                filtro = "telefono_lector";
+                lectores.filtroSearchLectores(tblLectores, lblLectoresEncontrados, filtro, dato);
+                break;
+            case 7:
+                filtro = "grado_alumno";
+                lectores.filtroSearchLectores(tblLectores, lblLectoresEncontrados, filtro, dato);
+                break;
+            case 8:
+                filtro = "grupo_alumno";
+                lectores.filtroSearchLectores(tblLectores, lblLectoresEncontrados, filtro, dato);
+                break;
+        }
+    }//GEN-LAST:event_btnSearchLectorActionPerformed
+
+    private void pmmiEliminarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiEliminarPrestamoActionPerformed
+        int fila = this.tblPrestamos.getSelectedRow();
+        int ID_pres = Integer.parseInt(this.tblPrestamos.getValueAt(fila, 0).toString());
+        int valor = JOptionPane.showConfirmDialog(null, " ¿Está seguro de eliminar el préstamo?", "Advertencia", JOptionPane.YES_NO_OPTION);
+        if(valor == JOptionPane.YES_OPTION) {
+            prestamos.eliminarPrestamo(ID_pres);
+            JOptionPane.showMessageDialog(this, "EL préstamo se ha eliminado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+        }
+    }//GEN-LAST:event_pmmiEliminarPrestamoActionPerformed
+
+    private void pmmiEliminarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiEliminarLibroActionPerformed
+        int fila = this.tblLibros.getSelectedRow();
+        String ID_libro = this.tblPrestamos.getValueAt(fila, 0).toString();
+        int valor = JOptionPane.showConfirmDialog(null, " ¿Está seguro de eliminar el libro?\n"
+               + "Se eliminarán todos los registros\nde préstamos asociados a este ejemplar.", "Advertencia", JOptionPane.YES_NO_OPTION);
+        if(valor == JOptionPane.YES_OPTION) {
+            libros.eliminarLibro(ID_libro);
+            JOptionPane.showMessageDialog(this, "EL libro se ha eliminado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+        }
+    }//GEN-LAST:event_pmmiEliminarLibroActionPerformed
+
+    private void pmmiEliminarLectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiEliminarLectorActionPerformed
+        int fila = this.tblLectores.getSelectedRow();
+        String ID_lector = this.tblLectores.getValueAt(fila, 0).toString();
+        int valor = JOptionPane.showConfirmDialog(null, " ¿Está seguro de eliminar al lector?\n"
+               + "Se eliminarán todos los registros\nde préstamos asociados a esta persona.", "Advertencia", JOptionPane.YES_NO_OPTION);
+        if(valor == JOptionPane.YES_OPTION) {
+            lectores.eliminarLector(ID_lector);
+            JOptionPane.showMessageDialog(this, "EL lector se ha eliminado con éxito", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+        }
+    }//GEN-LAST:event_pmmiEliminarLectorActionPerformed
+
+    private void pmmiEntregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiEntregadoActionPerformed
+        int fila = this.tblPrestamos.getSelectedRow();
+        int ID_pres = Integer.parseInt(this.tblPrestamos.getValueAt(fila, 0).toString());
+        String ID_lib = this.tblPrestamos.getValueAt(fila, 1).toString();
+        prestamos.actualizarEstadoEntregado(ID_pres, ID_lib);
+    }//GEN-LAST:event_pmmiEntregadoActionPerformed
+
+    private void btnRecargarTablaPresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarTablaPresActionPerformed
+        prestamos.mostrarPrestamos(tblPrestamos, lblPrestamosEncontrados);
+    }//GEN-LAST:event_btnRecargarTablaPresActionPerformed
+
+    private void btnRecargarTablaLibActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarTablaLibActionPerformed
+        libros.mostrarLibros(tblLibros, lblLibrosEncontrados);
+    }//GEN-LAST:event_btnRecargarTablaLibActionPerformed
+
+    private void btnRecargarTablaLecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarTablaLecActionPerformed
+        lectores.mostrarLectores(tblLectores, lblLectoresEncontrados);
+    }//GEN-LAST:event_btnRecargarTablaLecActionPerformed
+
+    private void btnFecha1PresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecha1PresActionPerformed
+        Date fechaSelect = this.calenPrestamo.getDatoFecha();
+        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = formato.format(fechaSelect);
+        this.txtFechaPres.setText(fecha);
+    }//GEN-LAST:event_btnFecha1PresActionPerformed
+
+    private void btnFecha2PresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecha2PresActionPerformed
+        Date fechaSelect = this.calenPrestamo.getDatoFecha();
+        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = formato.format(fechaSelect);
+        this.txtFechaEntrega.setText(fecha);
+    }//GEN-LAST:event_btnFecha2PresActionPerformed
+
+    private void pmmiEditarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiEditarPrestamoActionPerformed
+        int fila = this.tblPrestamos.getSelectedRow();
+        int idP = Integer.parseInt(this.tblPrestamos.getValueAt(fila, 0).toString());
+        
+        EdicionDatosForm edi = new EdicionDatosForm(new javax.swing.JFrame(), true);
+        
+        prestamos.cargarDatosPresForm(idP, edi.txtIDpresEdicion, edi.txtIDlibEdicionPres, edi.txtIDlecEdicionPres,
+               edi.txtFechaPresEdicion, edi.txtFechaEntregEdicion, edi.rbtnMatEdicion, edi.rbtnVesEdicion,
+               edi.rbtnIntEdicion, edi.rbtnExtEdicion, edi.cbStatusEdicion);
+        edi.pnlUpdatePrestamo.setVisible(true);
+        edi.pnlUpdateLibro.setVisible(false);
+        edi.pnlUpdateLector.setVisible(false);
+        edi.pnlVacio.setVisible(false);
+        edi.lblTituloEdicionPres.setText("ACTUALIZACIÓN DE REGISTRO DE PRÉSTAMO");
+        edi.setVisible(true);
+    }//GEN-LAST:event_pmmiEditarPrestamoActionPerformed
+
+    private void pmmiEditarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiEditarLibroActionPerformed
+        int fila = this.tblLibros.getSelectedRow();
+        String idL = this.tblLibros.getValueAt(fila, 0).toString();
+        
+        EdicionDatosForm edicion = new EdicionDatosForm(new javax.swing.JFrame(), true);
+        
+        libros.cargarDatosLibForm(idL, edicion.txtIDlibEdicion, edicion.txtNombreLibEdicion, edicion.txtAutorLibEdicion,
+               edicion.txtEditorialLibEdicion, edicion.txtAnioLibEdicion, edicion.txtCiudadLibEdicion,
+               edicion.txtAreaLibEdicion, edicion.txtEjemplarLibEdicion);
+        edicion.pnlUpdatePrestamo.setVisible(false);
+        edicion.pnlUpdateLibro.setVisible(true);
+        edicion.pnlUpdateLector.setVisible(false);
+        edicion.pnlVacio.setVisible(false);
+        edicion.lblTituloEdicionPres.setText("ACTUALIZACIÓN DE REGISTRO DE LIBRO");
+        edicion.setVisible(true);
+    }//GEN-LAST:event_pmmiEditarLibroActionPerformed
+
+    private void pmmiEditarLectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiEditarLectorActionPerformed
+        int fila = this.tblLectores.getSelectedRow();
+        String idLec = this.tblLectores.getValueAt(fila, 0).toString();
+        
+        EdicionDatosForm edicion = new EdicionDatosForm(new javax.swing.JFrame(), true);
+        
+        lectores.cargarDatosLectorForm(idLec, edicion.txtIDlecEdicion, edicion.txtNomLecEdicion, 
+               edicion.txtPatLecEdicion, edicion.txtMatLecEdicion, edicion.txtEdadLecEdicion, 
+               edicion.txtTeleLecEdicion, edicion.txtDomLecEdicion, edicion.txtGradoLecEdicion,
+               edicion.txtGrupoLecEdicion);
+        edicion.pnlUpdatePrestamo.setVisible(false);
+        edicion.pnlUpdateLibro.setVisible(false);
+        edicion.pnlUpdateLector.setVisible(true);
+        edicion.pnlVacio.setVisible(false);
+        edicion.lblTituloEdicionPres.setText("ACTUALIZACIÓN DE REGISTRO DE LECTOR");
+        edicion.setVisible(true);
+    }//GEN-LAST:event_pmmiEditarLectorActionPerformed
+
+    private void pmmiCopiarIDPresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiCopiarIDPresActionPerformed
+        int fila = this.tblPrestamos.getSelectedRow();
+        String id_p = this.tblPrestamos.getValueAt(fila, 0).toString();
+        
+        portapapeles.copyToClipboard(id_p);
+    }//GEN-LAST:event_pmmiCopiarIDPresActionPerformed
+
+    private void pmmiCopiarIDLibActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiCopiarIDLibActionPerformed
+        int fila = this.tblLibros.getSelectedRow();
+        String id_lib = this.tblLibros.getValueAt(fila, 0).toString();
+        
+        portapapeles.copyToClipboard(id_lib);
+    }//GEN-LAST:event_pmmiCopiarIDLibActionPerformed
+
+    private void pmmiCopiarIDLecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiCopiarIDLecActionPerformed
+        int fila = this.tblLectores.getSelectedRow();
+        String id_lec = this.tblLectores.getValueAt(fila, 0).toString();
+        
+        portapapeles.copyToClipboard(id_lec);
+    }//GEN-LAST:event_pmmiCopiarIDLecActionPerformed
+
+    private void pmmiPegarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiPegarIDActionPerformed
+        portapapeles.pasteFromClipboard(txtIDlibroPres);
+    }//GEN-LAST:event_pmmiPegarIDActionPerformed
+
+    private void pmmiPegarIDLecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmmiPegarIDLecActionPerformed
+        portapapeles.pasteFromClipboard(txtIDlectorPres);
+    }//GEN-LAST:event_pmmiPegarIDLecActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1642,12 +2140,17 @@ public class Ventana_Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelarRegLector;
     private javax.swing.JButton btnCancelarRegLibro;
     private rojeru_san.complementos.RSButtonHover btnEstadisticas;
+    private javax.swing.JButton btnFecha1Pres;
+    private javax.swing.JButton btnFecha2Pres;
     private rojeru_san.complementos.RSButtonHover btnLector;
     private rojeru_san.complementos.RSButtonHover btnLibros;
     private javax.swing.JButton btnLimpiarFormLectores;
     private javax.swing.JButton btnLimpiarFormLibro;
     private javax.swing.JButton btnLimpiarFormPrestamo;
     private rojeru_san.complementos.RSButtonHover btnPrestamos;
+    private javax.swing.JButton btnRecargarTablaLec;
+    private javax.swing.JButton btnRecargarTablaLib;
+    private javax.swing.JButton btnRecargarTablaPres;
     private rojeru_san.complementos.RSButtonHover btnRegLector;
     private rojeru_san.complementos.RSButtonHover btnRegLibros;
     private rojeru_san.complementos.RSButtonHover btnRegPrestamos;
@@ -1660,9 +2163,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnSearchLector;
     private javax.swing.JButton btnSearchLibro;
     private javax.swing.JButton btnSearchPrestamo;
-    private javax.swing.JButton btnUpdateLector;
-    private javax.swing.JButton btnUpdateLibro;
-    private javax.swing.JButton btnUpdatePrestamo;
     private rojeru_san.componentes.RSCalendar calenPrestamo;
     private javax.swing.JComboBox<String> cbEstadoPrestamo;
     private javax.swing.JComboBox<String> cbFiltroSearchLectores;
@@ -1688,9 +2188,11 @@ public class Ventana_Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel35;
@@ -1706,13 +2208,29 @@ public class Ventana_Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblLectoresEncontrados;
     private javax.swing.JLabel lblLibrosEncontrados;
     private javax.swing.JLabel lblPrestamosEncontrados;
+    private javax.swing.JPopupMenu pmLectores;
+    private javax.swing.JPopupMenu pmLibros;
+    private javax.swing.JPopupMenu pmPegarIDLec;
+    private javax.swing.JPopupMenu pmPegarIDlib;
+    private javax.swing.JPopupMenu pmPrestamos;
+    private javax.swing.JMenuItem pmmiCopiarIDLec;
+    private javax.swing.JMenuItem pmmiCopiarIDLib;
+    private javax.swing.JMenuItem pmmiCopiarIDPres;
+    private javax.swing.JMenuItem pmmiEditarLector;
+    private javax.swing.JMenuItem pmmiEditarLibro;
+    private javax.swing.JMenuItem pmmiEditarPrestamo;
+    private javax.swing.JMenuItem pmmiEliminarLector;
+    private javax.swing.JMenuItem pmmiEliminarLibro;
+    private javax.swing.JMenuItem pmmiEliminarPrestamo;
+    private javax.swing.JMenuItem pmmiEntregado;
+    private javax.swing.JMenuItem pmmiPegarID;
+    private javax.swing.JMenuItem pmmiPegarIDLec;
     private javax.swing.JPanel pnlBienvenida;
     private javax.swing.JPanel pnlBotonesMenu;
     private javax.swing.JPanel pnlEstadisticas;
@@ -1731,7 +2249,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbtnInterno;
     private javax.swing.JRadioButton rbtnMatutino;
     private javax.swing.JRadioButton rbtnVespertino;
-    private javax.swing.JTable tblInfLibroPrestamo;
     private javax.swing.JTable tblLectores;
     private javax.swing.JTable tblLibros;
     private javax.swing.JTable tblPrestamos;
@@ -1749,6 +2266,8 @@ public class Ventana_Principal extends javax.swing.JFrame {
     private javax.swing.JTextField txtFiltroLectores;
     private javax.swing.JTextField txtFiltroLibros;
     private javax.swing.JTextField txtFiltroPrestamos;
+    private javax.swing.JTextField txtGradoLector;
+    private javax.swing.JTextField txtGrupoLector;
     private javax.swing.JTextField txtIDlectorPres;
     private javax.swing.JTextField txtIDlibroPres;
     private javax.swing.JTextField txtIDprestamo;
