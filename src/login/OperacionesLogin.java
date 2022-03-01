@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,9 +46,24 @@ public class OperacionesLogin {
                     datosUser[i] = re.getObject(i + 1);
                 }
             }
-            
+            conexion.cerrarConexion();
         } catch (SQLException e) {
-            
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al conectar a la base de datos..."+e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public void registrarUsuario(String nombre, String paterno, String materno, String telefono, String turno,
+           String usuario, String pass) {
+        try {
+            String sentencia = "INSERT INTO tbl_usuarioSis VALUES(NULL,'"+nombre+"','"+paterno+"','"+materno+"',"
+                   + "'"+telefono+"','"+turno+"','"+usuario+"','"+pass+"')";
+            Connection con = conexion.obConexion();
+            Statement registro = conexion.crearSentencia();
+            registro.executeUpdate(sentencia);
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al registrar..."+e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
 }
