@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="todoLector" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9fac32d-b783-4ee5-9da8-8eda7d41306f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="23"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM tbl_lector ORDER BY nombre_lector ASC]]>
+	</queryString>
+	<field name="ID_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ape_paterno_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ape_materno_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="edad_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefono_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="domicilio_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="grado_alumno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="grupo_alumno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="112" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="605" y="0" width="197" height="20" uuid="9e83b2ff-be50-45ca-9a86-b37c69a16062"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="193" y="20" width="402" height="23" uuid="0fd8a903-581d-4f10-b3c9-25d4c63a9db3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Centro de Bachillerato Tecnológico Agropecuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="259" y="65" width="284" height="23" uuid="79eb437e-3ab3-472c-8eec-86cc21dddc3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[Dr. Belisario Domínguez Palencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="358" y="43" width="78" height="22" uuid="3407150c-f4ba-42d6-9b1a-fdfbb38df3d1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[No. 46]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="259" y="13" width="284" height="20" uuid="fa430744-223d-4a48-ba97-44dc0379d3b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Alumnos que han realizado préstamos]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="20" backcolor="#0099FF" uuid="237acbf0-fb51-45b0-8cd9-6e68b99e2a74"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="116" height="20" forecolor="#FFFFFF" uuid="c9c4f267-798a-4f00-90c6-643d17cdd691"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="116" y="0" width="110" height="20" forecolor="#FFFFFF" uuid="5e1159cd-f3bd-4e02-a592-72d59b712688"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="0" width="110" height="20" forecolor="#FFFFFF" uuid="e68e2d08-98ff-4156-8558-3ae8a5845be9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido Paterno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="0" width="110" height="20" forecolor="#FFFFFF" uuid="84409aa2-137c-419b-8f6d-5f2d9bae20df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido materno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="0" width="36" height="20" forecolor="#FFFFFF" uuid="bf2ad47e-f56c-4ff4-8a83-50bb96e99b40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Edad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="0" width="100" height="20" forecolor="#FFFFFF" uuid="d2c36ba6-1f08-40ca-9bed-f4f4699fbcbd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="582" y="0" width="130" height="20" forecolor="#FFFFFF" uuid="dcf8b3b6-0903-498b-a6d8-324707d93e80"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Domicilio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="712" y="0" width="45" height="20" forecolor="#FFFFFF" uuid="1c64913e-a0df-4155-9f72-a63d2db3f613"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="757" y="0" width="45" height="20" forecolor="#FFFFFF" uuid="6566ce6e-b5a8-48aa-8ce6-eedea338a97d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grupo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="40" uuid="9a835996-fe72-4bbd-839f-61e3cdfbdaba"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="116" height="40" uuid="d34d51f7-451c-4141-9328-697bcdcf9cb1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_lector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="0" width="110" height="40" uuid="f0be0cbc-5531-4db6-bb6e-2aedd974c1c8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_lector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="0" width="110" height="40" uuid="e0d379a0-b186-4f82-aa99-a9ee0bec7e9d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ape_paterno_lector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="0" width="110" height="40" uuid="dd7afbda-98b0-4de7-a08c-14d3a1c18f01"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ape_materno_lector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="0" width="36" height="40" uuid="2b15abd7-73eb-4642-9dfc-64a3920b8dfa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{edad_lector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="482" y="0" width="100" height="40" uuid="3beb86a9-c35a-4681-812e-55805408db74"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefono_lector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="582" y="0" width="130" height="40" uuid="52014e1a-31b7-465c-8ff7-c7cbc320ae6f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{domicilio_lector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="712" y="0" width="45" height="40" uuid="f3f5db1f-0a1b-4d29-b5fd-bd2ab7ae6f5f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grado_alumno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="757" y="0" width="45" height="40" uuid="08483050-e00f-47d1-b8b6-1255010d3359"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grupo_alumno}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="116" y="-20" width="1" height="60" uuid="c6713ecf-39a2-4db2-9c9a-145539e2f508"/>
+			</line>
+			<line>
+				<reportElement x="226" y="-20" width="1" height="60" uuid="a27f79bc-6bc0-4a8f-9ba7-f8012a16f024"/>
+			</line>
+			<line>
+				<reportElement x="336" y="-20" width="1" height="60" uuid="e3df80fa-a9ed-4446-b74f-81dcd58bb3ea"/>
+			</line>
+			<line>
+				<reportElement x="446" y="-20" width="1" height="60" uuid="7f4eef92-d34f-440a-964b-fc3293ee38b6"/>
+			</line>
+			<line>
+				<reportElement x="482" y="-20" width="1" height="60" uuid="7955fae3-63a7-49c4-a2b1-ad883cc606ef"/>
+			</line>
+			<line>
+				<reportElement x="582" y="-20" width="1" height="60" uuid="b3c1a40f-5cd3-4941-94f8-5505d6ff2c12"/>
+			</line>
+			<line>
+				<reportElement x="712" y="-20" width="1" height="60" uuid="548361d5-c6dc-42b4-b345-1f3fa30be57b"/>
+			</line>
+			<line>
+				<reportElement x="757" y="-20" width="1" height="60" uuid="3c3c907f-14c2-4e4d-8ebe-3b11d88d67bc"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="333" y="0" width="80" height="20" uuid="9c6733f6-7b75-422f-a5a4-037a4114a36d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="413" y="0" width="40" height="20" uuid="34e9299f-9215-49a6-8ff3-341d648249c2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

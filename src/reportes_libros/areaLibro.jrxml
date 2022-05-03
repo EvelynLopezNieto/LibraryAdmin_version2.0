@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="areaLibro" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9282987a-bfd7-4502-8ec8-1565550fe7f4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="areaLibro" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM tbl_libro WHERE area_conocimiento = $P{areaLibro}]]>
+	</queryString>
+	<field name="ID_libro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_libro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="autor_libro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="editorial_libro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="anio_publicacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ciudad_publicacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="area_conocimiento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ejemplares" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="111" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="605" y="0" width="197" height="20" uuid="7fd0d201-e329-4e65-83e4-c96b8492e5e2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="258" y="65" width="284" height="23" uuid="25ec6147-ab05-419b-9e99-b4273f3ede64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[Dr. Belisario Domínguez Palencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="192" y="20" width="402" height="23" uuid="bfdc442b-787f-42ce-9879-66244a369425"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Centro de Bachillerato Tecnológico Agropecuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="43" width="78" height="22" uuid="18847a5d-01c5-418a-a73d-531365aa28cc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[No. 46]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="22" width="100" height="20" uuid="cb86d155-a1c9-49bf-818a-7cfe88a651c9"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Libros del área:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="22" width="363" height="20" uuid="a1cf6783-7347-4433-81ff-1f4c992346eb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{areaLibro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="95663ce6-5216-4d2c-8a63-ba89d400f79f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#0099FF" uuid="333dc76c-90d7-4a63-b4cc-dca5468c7e59"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="142" height="20" forecolor="#FFFFFF" uuid="152e5554-2d0a-4cf7-9a6e-ba08f0a3f3ce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="0" width="120" height="20" forecolor="#FFFFFF" uuid="58f149e6-cbe6-4808-8b3a-04d2ca74e2e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Autor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="362" y="0" width="88" height="20" forecolor="#FFFFFF" uuid="8d64c174-fb2d-4dcf-b736-66b55aa28dc3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Editorial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="0" width="55" height="20" forecolor="#FFFFFF" uuid="7d186595-0062-43e8-a16d-3fe711a32671"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="505" y="0" width="100" height="20" forecolor="#FFFFFF" uuid="24b2faff-24de-4fd4-a97a-468aabe4588e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ciudad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="605" y="0" width="125" height="20" forecolor="#FFFFFF" uuid="3f715b85-d710-4e35-a5c8-4dd4dddb35dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Área conocimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="730" y="0" width="72" height="20" forecolor="#FFFFFF" uuid="2fa895de-e16d-41c5-8785-ba9310f99f84"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ejemplares]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="40" uuid="31dacd28-98a0-42ee-9f7e-29fb0a1c76d6"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="366a466e-7381-46c3-bbc2-2911511c0e97"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_libro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="142" height="40" uuid="1092f82f-ba60-4661-90de-1e4b8649bc2b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_libro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="0" width="120" height="40" uuid="ad8e9027-7dab-493f-aab3-51130257df3a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{autor_libro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="362" y="0" width="88" height="20" uuid="18723b75-9878-4610-9031-98f88f7551d9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{editorial_libro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="55" height="20" uuid="2b0ad307-24d9-4d8d-bb2a-5dccba2c7d13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{anio_publicacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="505" y="0" width="100" height="20" uuid="adf09d82-7e58-4b48-90b1-b3c25314203f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ciudad_publicacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="605" y="0" width="125" height="40" uuid="6eac53c3-c06b-4012-97a4-ee359d9e5844"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{area_conocimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="730" y="0" width="72" height="20" uuid="42c9daec-1407-4d31-ab0b-3151c8b6e022"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ejemplares}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="100" y="-20" width="1" height="60" uuid="a626c29b-a88c-48dc-9638-bd2dd47986bc"/>
+			</line>
+			<line>
+				<reportElement x="242" y="-20" width="1" height="60" uuid="72edc392-3d7d-4f22-9eb7-eba51f944fa6"/>
+			</line>
+			<line>
+				<reportElement x="362" y="-20" width="1" height="60" uuid="7cfde6e3-93d9-47d7-bbc0-908ca5d616c0"/>
+			</line>
+			<line>
+				<reportElement x="450" y="-20" width="1" height="60" uuid="a0d846de-df8c-4b82-bbc5-06e8c454df03"/>
+			</line>
+			<line>
+				<reportElement x="505" y="-20" width="1" height="60" uuid="7ea67cc3-2a81-4183-9a22-e67ff3f49de6"/>
+			</line>
+			<line>
+				<reportElement x="605" y="-20" width="1" height="60" uuid="12af07f2-b5d3-45a7-8d28-363ea9402361"/>
+			</line>
+			<line>
+				<reportElement x="730" y="-20" width="1" height="60" uuid="79d30366-1034-447b-a805-04f6fc74ce51"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="343" y="0" width="80" height="20" uuid="708283c6-c577-4ec6-85da-529cc9fb1cc6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="423" y="0" width="40" height="20" uuid="6f208d4f-c8e8-4c59-b271-9ae31d22c48b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

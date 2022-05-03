@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="IDlector" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9ef761f2-ee47-4787-9764-6cfd090b37c1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="23"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IDlector" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT tbl_prestamo.ID_prestamo,tbl_prestamo.ID_libro,tbl_prestamo.ID_lector,
+tbl_prestamo.fecha_prestamo,tbl_prestamo.fecha_entrega,tbl_prestamo.turno,tbl_prestamo.tipo_prestamo,
+tbl_prestamo.status_prestamo,tbl_lector.nombre_lector,tbl_lector.ape_paterno_lector,
+tbl_lector.ape_materno_lector FROM tbl_prestamo,tbl_lector 
+WHERE tbl_prestamo.ID_lector = tbl_lector.ID_lector AND tbl_prestamo.ID_lector = $P{IDlector} 
+ORDER BY tbl_prestamo.fecha_prestamo DESC]]>
+	</queryString>
+	<field name="ID_prestamo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_libro" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_prestamo" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_entrega" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="turno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_prestamo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status_prestamo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ape_paterno_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ape_materno_lector" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="113" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="605" y="0" width="197" height="20" uuid="62bf8b40-65f6-449b-944a-7845536c1bb4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="196" y="24" width="402" height="23" uuid="f6fc66f4-2935-4101-9b75-fc89c2746350"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Centro de Bachillerato Tecnológico Agropecuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="69" width="284" height="23" uuid="c4423544-5971-4f10-9ad7-6952ca92b15c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[Dr. Belisario Domínguez Palencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="47" width="78" height="22" uuid="b6bd7064-4e96-4125-8134-3ac35ad8d19c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[No. 46]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="252" height="20" uuid="e00436d2-ade1-493b-832f-86e569fc2289"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Historial de préstamos del alumno (lector):]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="20" width="252" height="20" uuid="61982681-4ada-4ed8-a0fc-b48bea1ee632"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{IDlector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="40" width="150" height="20" uuid="eba031fa-e3df-4ad3-989b-042dd26092fe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_lector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="40" width="102" height="20" uuid="9b4f7c97-767f-4846-903d-20772ad957d3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ape_paterno_lector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="252" y="40" width="109" height="20" uuid="5891bc60-aed6-4e9e-95e5-e4224fadbbc0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ape_materno_lector}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="20" backcolor="#0099FF" uuid="cffcb22f-41a1-4cd3-a0b0-3f7ea38a4428"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" forecolor="#FFFFFF" uuid="b6c9f689-1bbe-4b4c-9b67-0249c83bec81"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID préstamo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" forecolor="#FFFFFF" uuid="28b28f03-41cf-4c9e-b9f8-cbb1948ee53d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID libro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" forecolor="#FFFFFF" uuid="6ea66d66-a93a-4442-b54f-103c407f86a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID lector]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" forecolor="#FFFFFF" uuid="d1938929-fe34-4e87-b410-3cd629ba85d3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha préstamo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="100" height="20" forecolor="#FFFFFF" uuid="a69b0f96-896a-47d9-b02c-9c7fbfe9e45e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha entrega]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="0" width="100" height="20" forecolor="#FFFFFF" uuid="0d195ecd-6ebe-47de-996a-289b620840f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Turno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="0" width="100" height="20" forecolor="#FFFFFF" uuid="7e1399c5-81a3-4cee-8b7b-5de48a3ac4cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo préstamo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="102" height="20" forecolor="#FFFFFF" uuid="a0aa32d1-550c-4024-8444-e931392e2335"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="40" uuid="0d776413-901e-4ac3-a67d-e28502e81f4d"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="40" uuid="65349f47-f986-43e0-bf5f-2c27f7da76b0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_prestamo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="40" uuid="9c00f862-84c9-4e11-ad99-da9f75fdbfe3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_libro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="40" uuid="dd7ffd84-c511-4e63-ad5d-8f30481f4b99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_lector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="40" uuid="d3aff470-20e9-4fbd-a35e-8115c6eda542"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_prestamo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="100" height="40" uuid="979af43a-20d9-4900-acd6-46ee4bd376f2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_entrega}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="0" width="100" height="40" uuid="ac765093-1d21-49e0-a918-57e2bd292099"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{turno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="600" y="0" width="100" height="40" uuid="712f8e2f-4ab9-4c65-ab95-80e462d3c310"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_prestamo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="0" width="102" height="40" uuid="6570aace-1ff1-4dbf-a57d-13988b952382"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status_prestamo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="100" y="-20" width="1" height="60" uuid="e9a395fe-b1b8-435f-998b-0e5eff9b8a40"/>
+			</line>
+			<line>
+				<reportElement x="200" y="-20" width="1" height="60" uuid="f442ca02-a4f4-432e-9ff4-7e1004af741c"/>
+			</line>
+			<line>
+				<reportElement x="300" y="-20" width="1" height="60" uuid="060d94da-fe40-4dce-88c0-2802c5da6c21"/>
+			</line>
+			<line>
+				<reportElement x="400" y="-20" width="1" height="60" uuid="07a05da1-3660-4f49-bf27-5c3b602d73ca"/>
+			</line>
+			<line>
+				<reportElement x="500" y="-20" width="1" height="60" uuid="6053383e-8a11-43ca-8497-3f6cca3212fa"/>
+			</line>
+			<line>
+				<reportElement x="600" y="-20" width="1" height="60" uuid="6d158e6e-eca8-4356-bf5c-141d3fdf13aa"/>
+			</line>
+			<line>
+				<reportElement x="700" y="-20" width="1" height="60" uuid="e14c5ec3-5e62-4594-97fd-bd987eefc062"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="340" y="0" width="80" height="20" uuid="9c145327-56d8-490d-94ed-3ce5233a5739"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="420" y="0" width="40" height="20" uuid="2aac0d57-4f9c-43e2-a942-2417b0b76aaa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

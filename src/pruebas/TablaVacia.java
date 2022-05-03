@@ -16,7 +16,7 @@
  */
 package pruebas;
 
-import conexion.ConexionBiblioteca;
+import com.evelyn.conexion.ConexionBiblioteca;
 import ds.desktop.notify.DesktopNotify;
 import java.sql.Connection;
 import java.sql.ResultSet;
