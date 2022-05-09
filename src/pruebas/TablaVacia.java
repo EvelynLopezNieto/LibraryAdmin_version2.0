@@ -18,13 +18,19 @@ package pruebas;
 
 import com.evelyn.conexion.ConexionBiblioteca;
 import ds.desktop.notify.DesktopNotify;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -51,11 +57,9 @@ public class TablaVacia extends javax.swing.JFrame {
             ResultSet re = verBusqueda.executeQuery(sentencia);
             String numVencer = null;
             if (!re.next()) {
-                this.jButton1.setVisible(true);
-                this.jLabel1.setText("La tabla está vacía");
+
             } else {
-                this.jButton1.setVisible(false);
-                this.jLabel1.setText("La tabla tiene registros");
+
             }
 
             conexion.cerrarConexion();
@@ -76,11 +80,10 @@ public class TablaVacia extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jPanel1 = new javax.swing.JPanel();
+        rSPanelImage1 = new rojerusan.RSPanelImage();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        rSCalendar1 = new rojeru_san.componentes.RSCalendar();
-        jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
 
         jMenuItem1.setText("Pegar");
         jPopupMenu1.add(jMenuItem1);
@@ -94,73 +97,62 @@ public class TablaVacia extends javax.swing.JFrame {
         jPopupMenu2.add(jMenuItem2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Registrar usuario");
+        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("La tabla está vacía");
-        jLabel1.setComponentPopupMenu(jPopupMenu2);
+        javax.swing.GroupLayout rSPanelImage1Layout = new javax.swing.GroupLayout(rSPanelImage1);
+        rSPanelImage1.setLayout(rSPanelImage1Layout);
+        rSPanelImage1Layout.setHorizontalGroup(
+            rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 450, Short.MAX_VALUE)
+        );
+        rSPanelImage1Layout.setVerticalGroup(
+            rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 350, Short.MAX_VALUE)
+        );
 
-        rSCalendar1.setFormatoFecha("yyyy-MM-dd");
+        jPanel1.add(rSPanelImage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 450, 350));
 
-        jTextField1.setComponentPopupMenu(jPopupMenu1);
-
-        jButton2.setText("Cargar fecha");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Generar grafico");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton2))))
-                        .addGap(18, 18, 18)
-                        .addComponent(rSCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(284, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
-                    .addComponent(rSCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jLabel1.setText("jLabel1");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 450, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 430));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-        Date fechaSelect = this.rSCalendar1.getDatoFecha();
-        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        String fecha = formato.format(fechaSelect);
-        this.jTextField1.setText(fecha);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        pruebas_graficos p = new pruebas_graficos();
+
+        try {
+            Date date = new Date();
+            //String miFecha = "Martes 04 de mayo de 2022";
+            Locale local = new Locale("es");
+            DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, local);
+            String fecha = df.format(date);
+            jLabel1.setText(fecha);
+            /*p.mostrar();
+            this.rSPanelImage1.setImagen(new ImageIcon("src/com/evelyn/graficos/prueba.png"));*/
+
+        } catch (Exception ex) {
+            Logger.getLogger(TablaVacia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,13 +191,12 @@ public class TablaVacia extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
-    private javax.swing.JTextField jTextField1;
-    private rojeru_san.componentes.RSCalendar rSCalendar1;
+    private rojerusan.RSPanelImage rSPanelImage1;
     // End of variables declaration//GEN-END:variables
 }

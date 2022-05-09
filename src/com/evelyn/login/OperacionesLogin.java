@@ -34,27 +34,6 @@ public class OperacionesLogin {
 
     ConexionBiblioteca conexion = new ConexionBiblioteca();
     
-
-    public void validarAcceso(String user, String pass) {
-        try {
-            String sentencia = "SELECT usuario, pass FROM tbl_usuarioSis";
-            Connection con = conexion.obConexion();
-            Statement consultaD = conexion.crearSentencia();
-            ResultSet re = consultaD.executeQuery(sentencia);
-            ResultSetMetaData rM = (ResultSetMetaData) re.getMetaData();
-            int cantColumnas = rM.getColumnCount();
-            Object[] datosUser = new Object[cantColumnas];
-            while (re.next()) {
-                for (int i = 0; i < cantColumnas; i++) {
-                    datosUser[i] = re.getObject(i + 1);
-                }
-            }
-            conexion.cerrarConexion();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error al conectar a la base de datos..."+e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
     public void registrarUsuario(String nombre, String paterno, String materno, String telefono, String turno,
            String usuario, String pass) {
         try {

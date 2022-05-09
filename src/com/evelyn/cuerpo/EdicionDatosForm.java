@@ -193,7 +193,7 @@ public class EdicionDatosForm extends javax.swing.JDialog {
 
         btnActualizarLecEdicion.setBackground(new java.awt.Color(153, 0, 0));
         btnActualizarLecEdicion.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
-        btnActualizarLecEdicion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1024.jpg"))); // NOI18N
+        btnActualizarLecEdicion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1024.jpg"))); // NOI18N
         btnActualizarLecEdicion.setText("Actualizar");
         btnActualizarLecEdicion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,7 +301,7 @@ public class EdicionDatosForm extends javax.swing.JDialog {
 
         btnEditarLib.setBackground(new java.awt.Color(153, 0, 0));
         btnEditarLib.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
-        btnEditarLib.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1024.jpg"))); // NOI18N
+        btnEditarLib.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1024.jpg"))); // NOI18N
         btnEditarLib.setText("Actualizar");
         btnEditarLib.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnEditarLib.addActionListener(new java.awt.event.ActionListener() {
@@ -396,7 +396,7 @@ public class EdicionDatosForm extends javax.swing.JDialog {
 
         btnEditarPres.setBackground(new java.awt.Color(153, 0, 0));
         btnEditarPres.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
-        btnEditarPres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/1024.jpg"))); // NOI18N
+        btnEditarPres.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1024.jpg"))); // NOI18N
         btnEditarPres.setText("Actualizar");
         btnEditarPres.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnEditarPres.addActionListener(new java.awt.event.ActionListener() {

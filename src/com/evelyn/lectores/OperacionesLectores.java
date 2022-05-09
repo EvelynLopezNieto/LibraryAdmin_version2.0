@@ -190,4 +190,38 @@ public class OperacionesLectores {
             JOptionPane.showMessageDialog(null, "Ocurrió un error al cargar los datos al formulario..."+e, "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public void infoRegistroLector (String IDlec, JTable tbl_l) {
+        DefaultTableModel tabla = new DefaultTableModel(datos, cabecera) {
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if (columnas == 8) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        tbl_l.setModel(tabla);
+        
+        try {
+            String sentencia = "SELECT * FROM tbl_lector WHERE ID_lector = '"+IDlec+"'";
+            Connection con = conexion.obConexion();
+            Statement ver = conexion.crearSentencia();
+            re = ver.executeQuery(sentencia);
+            rM = (ResultSetMetaData) re.getMetaData();
+            nColumnas = rM.getColumnCount();
+            datosTabla = new Object[nColumnas];
+            
+            while (re.next()) {
+                for (int i = 0; i < nColumnas; i++) {
+                    datosTabla[i] = re.getObject(i + 1);
+                }
+                tabla.addRow(datosTabla);
+            }
+            conexion.cerrarConexion();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al cargar los datos a la tabla..." + e, "¡¡Error de la aplicación!!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }
