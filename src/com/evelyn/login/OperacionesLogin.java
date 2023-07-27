@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -33,6 +34,22 @@ import javax.swing.JTextField;
 public class OperacionesLogin {
 
     ConexionBiblioteca conexion = new ConexionBiblioteca();
+    
+    public void cargarUcombo(JComboBox cbU) {
+        try {
+            String sentencia = "SELECT nombre_usuario FROM tbl_usuarioSis";
+            Connection con = conexion.obConexion();
+            Statement consulta = conexion.crearSentencia();
+            ResultSet rs = consulta.executeQuery(sentencia);
+            cbU.addItem("Seleccione usuario");
+            while(rs.next()) {
+                cbU.addItem(rs.getString("nombre_usuario"));
+            }
+            conexion.cerrarConexion();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar los datos..." + e, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
     public void registrarUsuario(String nombre, String paterno, String materno, String telefono, String turno,
            String usuario, String pass) {

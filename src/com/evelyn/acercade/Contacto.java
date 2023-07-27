@@ -58,7 +58,7 @@ public class Contacto extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        lblMensaje.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        lblMensaje.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         lblMensaje.setText("jLabel1");
 
         rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/images/icono_sis.png"))); // NOI18N

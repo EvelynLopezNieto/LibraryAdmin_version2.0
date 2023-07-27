@@ -31,11 +31,12 @@ public class LibraryAdmin extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setIconImage(logo.getImage());
-        this.lblMensaje.setText("<html><p>LibraryAdmin V2.0 es un software libre para la administración de bibliotecas públicas y gestión \n"
-               + "de préstamos de libros. Así como el control de los ejemplares y de los lectores.<p><p>Este software está destinado \n"
-               + "para ser utilizado en bibliotecas públicas municipales y bibliotecas escolares de México, propósito para el que se \n"
-               + "inició su desarrollo en Mayo de 2019.<p><p>LibraryAdmin V2.0 tiene origen como un proyecto académico universitario. "
-               + "El diseño y estructura son originales de su autor, algunos recursos pertenecen a terceros.</html>");
+        this.lblMensaje.setText("<html><p>LibraryAdmin V2.0 es un software de computadora para la administración de bibliotecas, gestión \n"
+               + "de préstamos de libros, control de los ejemplares y de los lectores.<p><p>Este software está destinado \n"
+               + "para ser utilizado en bibliotecas públicas y bibliotecas escolares de México, propósito para el que se \n"
+               + "inició su desarrollo en Mayo de 2019.<p><p>LibraryAdmin V2.0 tiene origen como un proyecto académico universitario, "
+               + "convirtiéndose en un proyecto personal de desarrollo después de haber sido presentado para cumplir los objetivos académicos, "
+                + "como seguimiento para cumplir con objetivos personales.</html>");
     }
 
     @SuppressWarnings("unchecked")
@@ -97,13 +98,13 @@ public class LibraryAdmin extends javax.swing.JDialog {
                 .addGap(5, 5, 5)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rSPanelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 320));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

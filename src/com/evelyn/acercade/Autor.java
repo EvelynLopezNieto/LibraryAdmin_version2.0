@@ -33,9 +33,11 @@ public class Autor extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setIconImage(logo.getImage());
-        this.lblMensaje.setText("<html><p>Autor e idea original de LibraryAdmin:<p><p>EVELYN LÓPEZ NIETO"
-               + "<p><p>Contribuciones:<p>Material design: RojeruSan (en Youtube como RojeruSan)"
-               + "<p>Herramienta de generación de reportes: Jasper Report</html>");
+        this.lblMensaje.setText("<html><p>El diseño, estructura, desarrollo e idea son originales de su autor para el softaware LibraryAdmin:"
+               + "<p><p>EVELYN LÓPEZ NIETO"
+               + "<p><p>Software de terceros:"
+               + "<p>- Herramienta de generación de reportes Jasper Report"
+               + "<p>- Sistema Gestor de Base de Datos por MySQL v5.7</html>");
     }
 
     /**
@@ -61,6 +63,8 @@ public class Autor extends javax.swing.JDialog {
 
         lblMensaje.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         lblMensaje.setText("jLabel1");
+        lblMensaje.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblMensaje.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
         rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/images/icono_sis.png"))); // NOI18N
 
@@ -77,7 +81,7 @@ public class Autor extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("SOBRE LOS AUTORES");
+        jLabel1.setText("SOBRE EL AUTOR");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,7 +96,7 @@ public class Autor extends javax.swing.JDialog {
                 .addComponent(lblMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(157, Short.MAX_VALUE)
+                .addContainerGap(188, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(155, 155, 155))
         );

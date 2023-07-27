@@ -20,7 +20,6 @@ import com.evelyn.acercade.Autor;
 import com.evelyn.acercade.Ayuda;
 import com.evelyn.acercade.Contacto;
 import com.evelyn.acercade.LibraryAdmin;
-import com.evelyn.acercade.Licencia;
 import com.evelyn.conexion.ConexionBiblioteca;
 import com.evelyn.estadisticas.Estadisticas;
 import java.awt.event.WindowAdapter;
@@ -256,7 +255,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
         Autor = new javax.swing.JMenuItem();
         Contacto = new javax.swing.JMenuItem();
         Ayuda = new javax.swing.JMenuItem();
-        Licencia = new javax.swing.JMenuItem();
 
         pmmiEditarPrestamo.setText("Editar");
         pmmiEditarPrestamo.addActionListener(new java.awt.event.ActionListener() {
@@ -1981,15 +1979,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
         });
         AcercaDe.add(Ayuda);
 
-        Licencia.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        Licencia.setText("Licencia");
-        Licencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LicenciaActionPerformed(evt);
-            }
-        });
-        AcercaDe.add(Licencia);
-
         jMenuBar1.add(AcercaDe);
 
         setJMenuBar(jMenuBar1);
@@ -2895,11 +2884,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
         dialog.setVisible(true);
     }//GEN-LAST:event_AyudaActionPerformed
 
-    private void LicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LicenciaActionPerformed
-        Licencia dialog = new Licencia(new javax.swing.JFrame(), true);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_LicenciaActionPerformed
-
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -2942,7 +2926,6 @@ public class Ventana_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem Desbloquear;
     private javax.swing.JMenu Herramientas;
     private javax.swing.JMenuItem LibraryAdmin;
-    private javax.swing.JMenuItem Licencia;
     private javax.swing.JMenuItem Salir;
     private javax.swing.JMenu Ventana;
     private javax.swing.JButton btnCancelarPrestamo;

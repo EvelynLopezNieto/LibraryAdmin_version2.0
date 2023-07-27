@@ -53,7 +53,7 @@
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="157" max="32767" attributes="0"/>
+                  <EmptySpace pref="188" max="32767" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
               </Group>
@@ -80,6 +80,8 @@
               <Font name="Comic Sans MS" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="jLabel1"/>
+            <Property name="verticalAlignment" type="int" value="1"/>
+            <Property name="verticalTextPosition" type="int" value="1"/>
           </Properties>
         </Component>
         <Container class="rojerusan.RSPanelImage" name="rSPanelImage1">
@@ -108,7 +110,7 @@
               <Font name="Comic Sans MS" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="SOBRE LOS AUTORES"/>
+            <Property name="text" type="java.lang.String" value="SOBRE EL AUTOR"/>
           </Properties>
         </Component>
       </SubComponents>
