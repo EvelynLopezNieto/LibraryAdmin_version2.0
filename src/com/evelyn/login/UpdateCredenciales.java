@@ -195,6 +195,11 @@ public class UpdateCredenciales extends javax.swing.JDialog {
         btnCancelarMovAdmin.setFont(new java.awt.Font("MV Boli", 0, 14)); // NOI18N
         btnCancelarMovAdmin.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelarMovAdmin.setText("Cancelar");
+        btnCancelarMovAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarMovAdminActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancelarMovAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 320, 100, 40));
 
         txtPassAdmin.setForeground(new java.awt.Color(0, 0, 0));
@@ -245,6 +250,11 @@ public class UpdateCredenciales extends javax.swing.JDialog {
                + "El sistema se cerrará cuando usted\n"
                + "cierre este mensaje.", "ELiminación de credenciales", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnEliminarAdminActionPerformed
+
+    private void btnCancelarMovAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarMovAdminActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnCancelarMovAdminActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
