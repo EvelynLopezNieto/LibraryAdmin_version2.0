@@ -17,8 +17,9 @@
 package com.evelyn.login;
 
 import com.evelyn.cuerpo.Ventana_Principal;
-import com.mysql.jdbc.ResultSetMetaData;
+//import com.mysql.jdbc.ResultSetMetaData;
 import com.evelyn.conexion.ConexionBiblioteca;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -34,13 +35,14 @@ import javax.swing.JOptionPane;
  */
 public class LOGIN extends javax.swing.JFrame {
 
+    ImageIcon logo = new ImageIcon("src/images/icono_desktop.png");
     ConexionBiblioteca conexion = new ConexionBiblioteca();
     OperacionesLogin login = new OperacionesLogin();
 
     public LOGIN() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setIconImage(new ImageIcon(getClass().getResource("/image/icono_desktop.png")).getImage());
+        this.setIconImage(logo.getImage());
         revisarTablaVacía();
     }
 

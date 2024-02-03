@@ -17,7 +17,6 @@
 package pruebas;
 
 import com.evelyn.conexion.ConexionBiblioteca;
-import com.mysql.jdbc.ResultSetMetaData;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;

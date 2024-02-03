@@ -32,7 +32,7 @@ public class ConexionBiblioteca {
 
     public Connection obConexion() {
         try {
-            conexionLocal = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/BIBLIOTECA", "root", "");
+            conexionLocal = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/BIBLIOTECA", "root", "MCSPTV09");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos..." + e, "Enlace a base de datos", JOptionPane.ERROR_MESSAGE);
             System.exit(0);

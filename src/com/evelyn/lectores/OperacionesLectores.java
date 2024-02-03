@@ -16,7 +16,7 @@
  */
 package com.evelyn.lectores;
 
-import com.mysql.jdbc.ResultSetMetaData;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import com.evelyn.conexion.ConexionBiblioteca;
 import java.sql.Connection;
 import java.sql.ResultSet;

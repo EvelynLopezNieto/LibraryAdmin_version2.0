@@ -16,7 +16,7 @@
  */
 package com.evelyn.prestamos;
 
-import com.mysql.jdbc.ResultSetMetaData;
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import com.evelyn.conexion.ConexionBiblioteca;
 import ds.desktop.notify.DesktopNotify;
 import java.sql.Connection;
